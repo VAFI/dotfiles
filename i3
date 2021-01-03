@@ -1,4 +1,4 @@
- ######################################################################################################
+######################################################################################################
  ######################################################################################################
  ##       8888888 .d8888b.       .d8888b.   .d88888b.  888b    888 8888888888 8888888  .d8888b.      ##  
  ##         888  d88P  Y88b     d88P  Y88b d88P" "Y88b 8888b   888 888          888   d88P  Y88b     ##
@@ -16,13 +16,10 @@
  ##               888  "Y88b   888          Y88b d88P   d88P  888 888          888                   ##
  ##               888    888   888           Y88o88P   d88P   888 888          888                   ##
  ##               888   d88P   888            Y888P   d8888888888 888          888                   ##
- ## v1            8888888P"    888             Y8P   d88P     888 888        8888888      2020-03-29 ##
+ ## v2            8888888P"    888             Y8P   d88P     888 888        8888888      2021-01-01 ##
  ######################################################################################################
  ######################################################################################################
 
-
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
 bar {
         status_command i3status
 }
@@ -42,23 +39,23 @@ bar {
  ######################################################################################################
  ######################################################################################################
 
+### Init main laptop screen, because I'am so lasy for edit .xinit 
+exec "xrandr --output eDP-1-1 --primary --auto"
 
 #####  Screenshot  #####
         #screen
-        bindsym Print exec "flameshot full --path minecraft/screen/"
+        bindsym Print exec "flameshot full --path ~/Pictures/Screenshots"
         #area 
-        bindsym shift+Print exec "gnome-screenshot -a"
-        #screen clip
-        bindsym ctrl+Print exec "flameshot full -c"
-        #area clip
-        bindsym ctrl+shift+Print exec "flameshot gui"
+        bindsym shift+Print exec "flameshot gui"
 #####     Kill     #####
         # kill focused window
-        bindsym ctrl+q kill
+        bindsym $mod+q kill
 
 #####  Start dmenu #####
         bindsym $mod+d exec dmenu_run
 
+#####   Terminal   #####
+        bindsym $mod+t exec kitty
 
 
 
@@ -88,6 +85,7 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
+
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
@@ -187,11 +185,10 @@ bindsym $mod+Return exec i3-sensible-terminal
 
 
 
-
  ######################################################################################################
  ######################################################################################################
  ##              d8888 888     888 88888888888  .d88888b.  8888888b.  888     888 888b    888        ##
- ##             d88888 888     888     888     d88P" "Y88b 888   Y88b 888     888 8888b   888        ##
+ ##             d88888 888     888     888     d88P" "Y0388b 888   Y88b 888     888 8888b   888        ##
  ##            d88P888 888     888     888     888     888 888    888 888     888 88888b  888        ##
  ##           d88P 888 888     888     888     888     888 888   d88P 888     888 888Y88b 888        ##
  ##          d88P  888 888     888     888     888     888 8888888P"  888     888 888 Y88b888        ##
@@ -201,24 +198,20 @@ bindsym $mod+Return exec i3-sensible-terminal
  ######################################################################################################
  ######################################################################################################            
 
+exec --no-startup-id nm-applet
 exec --no-startup-id flameshot
-exec --no-startup-id tilix
+exec --no-startup-id Kitty 
 exec --no-startup-id firefox
-exec --no-startup-id  pavucontrol
+exec --no-startup-id pavucontrol
 exec --no-startup-id touchpad-indicator
+exec --no-startup-id obs
+exec --no-startup-id teamspeak3
 
 ##### Set keyboard language #####
 exec setxkbmap "us,ru" ",winkeys" "grp:alt_shift_toggle"
 
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
+#### Autolocker when suspend ####
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
-
-
 
 
 
@@ -241,7 +234,7 @@ default_border pixel
 for_window [tiling] border pixel 0
                                                                         
 #####    Set background   #####
-exec --no-startup-id feh --bg-scale Pictures/wallhaven-mdzld1.png 
+exec --no-startup-id feh --bg-scale ~/.config/i3/background.png
 
 #####   Workspace names   #####
 set $ws1 "1"
@@ -266,7 +259,6 @@ font pango:monospace 8
 
 
 
-
  ######################################################################################################
  ######################################################################################################
  ##                        888     888 88888888888 8888888 888      .d8888b.                         ##
@@ -284,7 +276,6 @@ font pango:monospace 8
 
 ##### Auto move window #####
 for_window [class="firefox"] move to workspace $ws2
-for_window [class="Tilix"] move to workspace $ws1
 for_window [class="obs"] move to workspace $ws10
 for_window [class="Pavucontrol"] move to workspace $ws10
 set $mod Mod4
